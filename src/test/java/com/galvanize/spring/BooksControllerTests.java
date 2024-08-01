@@ -30,6 +30,8 @@ public class BooksControllerTests {
     BooksService booksService;
     @MockBean
     AuthorsService authorsService;
+    @MockBean
+    GenreService genreService;
 
     ObjectMapper mapper = new ObjectMapper();
 

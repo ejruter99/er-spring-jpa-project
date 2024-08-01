@@ -35,6 +35,8 @@ public class AuthorsControllerTests {
     BooksService booksService;
     @MockBean
     AuthorsService authorsService;
+    @MockBean
+    GenreService genreService;
 
     @Test
     void getAuthorsReturnsAllAuthors() throws Exception {

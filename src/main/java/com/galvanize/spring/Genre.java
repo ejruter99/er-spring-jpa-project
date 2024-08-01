@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -16,9 +17,9 @@ public class Genre {
     private long id;
     private String Name;
     @OneToMany(mappedBy = "books", cascade = CascadeType.ALL)
-    private ArrayList<Book> books;
+    private List<Book> books;
 
-    public Genre(long id, String name, ArrayList<Book> books) {
+    public Genre(long id, String name, List<Book> books) {
         this.id = id;
         Name = name;
         this.books = books;
@@ -40,11 +41,11 @@ public class Genre {
         Name = name;
     }
 
-    public ArrayList<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(ArrayList<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 }
