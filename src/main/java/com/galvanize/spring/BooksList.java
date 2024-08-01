@@ -38,8 +38,8 @@ public class BooksList {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BooksList autosList = (BooksList) o;
-        return Objects.equals(books, autosList.books);
+        BooksList booksList = (BooksList) o;
+        return Objects.equals(books, booksList.books);
     }
 
     @Override
