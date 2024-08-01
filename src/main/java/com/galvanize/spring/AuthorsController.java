@@ -36,9 +36,34 @@ public class AuthorsController {
         return authorsService.addAuthor(author);
     }
 
+    @PatchMapping("/api/authors/{id}")
+    public Author updateAuthor(@PathVariable Long id,
+                               @RequestBody UpdateAuthorRequest update) {
+        Author author = authorsService.updateAuthor(id, update.getBirthYear(), update.getBooks());
+        author.setBirthYear(update.getBirthYear());
+        author.setBooks(update.getBooks());
+        return author;
+    }
+
+    @DeleteMapping("/api/authors/{id}")
+    public ResponseEntity deleteAuthor(@PathVariable Long id) {
+        try {
+            authorsService.deleteAuthor(id);
+        } catch (AuthorNotFoundException e) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.accepted().build();
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void authorNotFoundException(AuthorNotFoundException e) {
+
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void invalidAuthorException(InvalidAuthorException e) {
 
     }
 

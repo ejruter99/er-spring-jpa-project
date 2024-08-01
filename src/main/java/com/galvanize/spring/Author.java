@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -20,7 +21,7 @@ public class Author {
     @JoinTable(name = "author_books",
             joinColumns = @JoinColumn(name = "authors_id"),
             inverseJoinColumns = @JoinColumn(name = "books_id"))
-    private ArrayList<Book> books;
+    private List<Book> books;
 
     public Author(long id, String name, int birthYear, ArrayList<Book> books) {
         this.id = id;
@@ -53,11 +54,11 @@ public class Author {
         this.birthYear = birthYear;
     }
 
-    public ArrayList<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(ArrayList<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 }

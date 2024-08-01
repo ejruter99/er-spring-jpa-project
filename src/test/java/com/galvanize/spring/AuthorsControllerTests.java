@@ -106,6 +106,58 @@ public class AuthorsControllerTests {
                 .andExpect(jsonPath("name").value("Eli"));
     }
 
+    @Test
+    void addAuthorReturnsFail() throws Exception {
+        ArrayList<Book> books = new ArrayList<>();
+        Author author = new Author(1, "Eli", 1999, books);
+        when(authorsService.addAuthor(any(Author.class))).thenThrow(InvalidAuthorException.class);
+        mockMvc.perform(post("/api/authors").contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(author)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateAuthorWithObjectReturnsAuthor() throws Exception {
+        ArrayList<Book> books = new ArrayList<>();
+        Author author = new Author(1, "Eli", 1999, books);
+        UpdateAuthorRequest update = new UpdateAuthorRequest(2000, books);
+        when(authorsService.updateAuthor(anyLong(), anyInt(), anyList())).thenReturn(author);
+        mockMvc.perform(patch("/api/authors/" + author.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(update)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("birthYear").value(2000));
+    }
+
+    @Test
+    void updateAuthorWithObjectReturnsBadRequest() throws Exception {
+        ArrayList<Book> books = new ArrayList<>();
+        Author author = new Author(1, "Eli", 1999, books);
+        UpdateAuthorRequest update = new UpdateAuthorRequest(2000, books);
+        when(authorsService.updateAuthor(anyLong(), anyInt(), anyList())).thenThrow(AuthorNotFoundException.class);
+        mockMvc.perform(patch("/api/authors/" + author.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(update)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void deleteAuthorWithIdExistsWorks() throws Exception {
+        mockMvc.perform(delete("/api/authors/1"))
+                .andExpect(status().isAccepted());
+        verify(authorsService).deleteAuthor(anyLong());
+    }
+
+    @Test
+    void deleteAuthorWithIdNotFound() throws Exception {
+        doThrow(new AuthorNotFoundException()).when(authorsService).deleteAuthor(anyLong());
+        mockMvc.perform(delete("/api/authors/1"))
+                .andExpect(status().isNoContent());
+    }
+
 
 
 
