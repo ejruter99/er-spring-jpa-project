@@ -3,7 +3,6 @@ package com.galvanize.spring;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -46,9 +45,9 @@ public class BooksServiceTests {
         ArrayList<Book> books = new ArrayList<>();
         ArrayList<Author> authors = new ArrayList<>();
         Book book = new Book(1, "Diary of a Wimpy Kid", "123ABC", 2005, authors, new Genre(1, "Comedy", book2));
-        when(booksRepository.findByGenreContainsAndAuthorContains(anyString(), anyString()))
+        when(booksRepository.findByGenreAndAuthors(any(Author.class), any(Genre.class)))
                 .thenReturn(Arrays.asList(book));
-        BooksList booksList = booksService.getBooks("Jeff Kinney", "Comedy");
+        BooksList booksList = booksService.getBooks(new Author(1, "Eli", 1999, books), new Genre(1, "Comedy", books));
         assertThat(booksList).isNotNull();
         assertThat(booksList.isEmpty()).isFalse();
     }

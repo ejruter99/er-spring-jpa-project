@@ -1,8 +1,10 @@
 package com.galvanize.spring;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
+@Service
 public class BooksService {
     BooksRepository booksRepository;
 
@@ -14,8 +16,8 @@ public class BooksService {
         return new BooksList(booksRepository.findAll());
     }
 
-    public BooksList getBooks(String author, String genre) {
-        return new BooksList(booksRepository.findByGenreContainsAndAuthorContains(author, genre));
+    public BooksList getBooks(Author author, Genre genre) {
+        return new BooksList(booksRepository.findByGenreAndAuthors(author, genre));
     }
 
     public Book getBook(Long id) {

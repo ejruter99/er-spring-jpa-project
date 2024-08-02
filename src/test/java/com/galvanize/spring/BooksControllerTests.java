@@ -70,7 +70,7 @@ public class BooksControllerTests {
         for (int i = 0; i < 5; i++) {
             books.add(new Book(1+i, "Diary of a Wimpy Kid", "123ABC", 2005, authors, new Genre(1, "Comedy", book2)));
         }
-        when(booksService.getBooks(anyString(), anyString())).thenReturn(new BooksList(books));
+        when(booksService.getBooks(any(Author.class), any(Genre.class))).thenReturn(new BooksList(books));
         mockMvc.perform(get("/api/books?author=[Jeff Kinney]&genre=Genre"))
                 .andExpect(status().isOk())
                 .andExpect((jsonPath("$.books", hasSize(5))));

@@ -17,8 +17,8 @@ public class BooksController {
     }
 
     @GetMapping("/api/books")
-    public ResponseEntity<BooksList> getBooks(@RequestParam(required = false) String author,
-                                              @RequestParam(required = false) String genre) {
+    public ResponseEntity<BooksList> getBooks(@RequestParam(required = false) Author author,
+                                              @RequestParam(required = false) Genre genre) {
         BooksList booksList;
         if (author == null && genre == null) {
             booksList = booksService.getBooks();
