@@ -75,7 +75,6 @@ public class BooksServiceTests {
         assertThat(book2).isNotNull();
         assertThat(book2.getTitle()).isEqualTo("Diary of a Wimpy Kid");
     }
-
     @Test
     void updateBook() {
         ArrayList<Book> books = new ArrayList<>();
@@ -89,6 +88,7 @@ public class BooksServiceTests {
         assertThat(book).isNotNull();
         assertThat(book2.getId()).isEqualTo(book.getId());
     }
+
 
     @Test
     void deleteBook() {
