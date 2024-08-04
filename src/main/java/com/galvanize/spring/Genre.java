@@ -1,5 +1,6 @@
 package com.galvanize.spring;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Genre {
     @Column(name = "genre_id")
     private long id;
     private String Name;
+    @JsonIgnore
     @OneToMany(mappedBy = "genre")
     private List<Book> books;
 

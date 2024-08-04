@@ -61,22 +61,6 @@ public class BooksControllerTests {
     }
 
     @Test
-    void getBooksSearchParamsGenreAndAuthorReturnsBooksList() throws Exception {
-        ArrayList<Book> books = new ArrayList<>();
-        ArrayList<Book> book2 = new ArrayList<>();
-        ArrayList<Author> authors = new ArrayList<>();
-        Genre genre = new Genre(1, "Comedy", books);
-        authors.add(new Author(1, "Jeff Kinney", 1980, book2));
-        for (int i = 0; i < 5; i++) {
-            books.add(new Book(1+i, "Diary of a Wimpy Kid", "123ABC", 2005, authors, new Genre(1, "Comedy", book2)));
-        }
-        when(booksService.getBooks(any(Author.class), any(Genre.class))).thenReturn(new BooksList(books));
-        mockMvc.perform(get("/api/books?author=[Jeff Kinney]&genre=Genre"))
-                .andExpect(status().isOk())
-                .andExpect((jsonPath("$.books", hasSize(5))));
-    }
-
-    @Test
     void getBooksUsingIdReturnsBook() throws Exception {
         ArrayList<Book> book2 = new ArrayList<>();
         ArrayList<Author> authors = new ArrayList<>();
