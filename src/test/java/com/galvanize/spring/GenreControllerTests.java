@@ -114,8 +114,7 @@ public class GenreControllerTests {
                 .content(mapper.writeValueAsString(update)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("name").value("Comedy"))
-                .andExpect(jsonPath("books").value(books));
+                .andExpect(jsonPath("name").value("Comedy"));
     }
 
     @Test

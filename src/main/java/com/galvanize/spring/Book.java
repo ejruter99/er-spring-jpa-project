@@ -2,10 +2,11 @@ package com.galvanize.spring;
 
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
+
+import jakarta.persistence.Id;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -17,11 +18,20 @@ public class Book {
     private String title;
     private String ISBN;
     private int publicationYear;
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
-    private ArrayList<Author> authors;
+    @ManyToMany
+//    @JoinColumn(name = "author_id")
+    @JoinTable(name = "author_books",
+            joinColumns = @JoinColumn(name = "authors_id"),
+            inverseJoinColumns = @JoinColumn(name = "books_id"))
+    @Column(name = "author")
+    private List<Author> authors;
+
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
+
+    public Book() {
+    }
 
     public Book(long id, String title, String ISBN, int publicationYear, ArrayList<Author> authors, Genre genre) {
         this.id = id;
@@ -64,7 +74,7 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public ArrayList<Author> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 

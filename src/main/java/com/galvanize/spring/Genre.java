@@ -1,11 +1,12 @@
 package com.galvanize.spring;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.Id;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -14,10 +15,15 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class Genre {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "genre_id")
     private long id;
     private String Name;
-    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "genre")
     private List<Book> books;
+
+    public Genre() {
+    }
 
     public Genre(long id, String name, List<Book> books) {
         this.id = id;
